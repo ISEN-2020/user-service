@@ -1,9 +1,0 @@
-com\usermanagement\security\WebSecurityConfig.class
-com\usermanagement\dao\CustomRepositoryImpl.class
-com\usermanagement\model\User.class
-com\usermanagement\controller\LoginController.class
-com\usermanagement\dao\CustomRepository.class
-com\usermanagement\application\Application.class
-com\usermanagement\model\Email.class
-com\usermanagement\dao\UserDao.class
-com\usermanagement\controller\UserManagementController.class
