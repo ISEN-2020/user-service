@@ -22,10 +22,10 @@ The User Management microservice API is used for management of the client's Data
 With a security level to check rights.
 
 ## Manual Installation
-####Prerequisite
+#### Prerequisite
 Java 14.0.2 / Meaven v3.6.3
 
-####Commands
+#### Commands
 Create .jar file
 
 ```bash
@@ -41,4 +41,4 @@ java -jar ./target/user-management-1.0.0.jar
 
 
 ## Team
-Devellopment platform - PORTEIL CALLONICO DOL - Sept 2020
+Development platform - PORTEIL CALLONICO DOL - Sept 2020
