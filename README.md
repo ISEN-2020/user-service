@@ -23,7 +23,7 @@ With a security level to check rights.
 
 ## Manual Installation
 ####Prerequisite
-Meaven v3.6.3 / OpenJDK v14.02 / Java
+Java 14.0.2 / Meaven v3.6.3
 
 ####Commands
 Create .jar file
