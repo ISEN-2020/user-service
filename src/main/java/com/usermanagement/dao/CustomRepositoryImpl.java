@@ -20,6 +20,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 	private static final String QUERY_SAVE_USER = "INSERT INTO user.user (name, email, password) VALUES ('%s','%s','%s')";
 	//private static final String QUERY_DELETE_USER_BY_ID = "DELETE u.* FROM user.user AS u WHERE u.id = ?1";
 	private static final String QUERY_DELETE_USER_BY_ID = "DELETE FROM user WHERE user.id = ?1";
+	private static final String QUERY_LOGIN = "SELECT COUNT(*) FROM user WHERE name=?1 AND password = ?2";
 
 	@PersistenceContext
 	EntityManager entityManager;
@@ -58,4 +59,10 @@ public class CustomRepositoryImpl implements CustomRepository {
 		query.setParameter(1, id);
 		return;
 	}
+
+	/*public boolean login(String username, String password) {
+		Query query = entityManager.createNativeQuery(QUERY_LOGIN, User.class);
+		query.setParameter(1, username, 2, password);
+		return;
+	}*/
 }
