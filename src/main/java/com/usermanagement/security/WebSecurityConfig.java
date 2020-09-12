@@ -22,13 +22,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(NoOpPasswordEncoder.getInstance())
-			.usersByUsernameQuery("SELECT name as username,password,enabled FROM user WHERE name=?")
-			.authoritiesByUsernameQuery("SELECT name as username, role FROM user WHERE name=?");
+			.usersByUsernameQuery("SELECT email as username,password,enabled FROM user WHERE email=?")
+			.authoritiesByUsernameQuery("SELECT email as username, role FROM user WHERE email=?");
 	 }
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	   http.authorizeRequests() 
+				.antMatchers("/saveUser").permitAll()
 	   			.anyRequest().access("hasRole('ROLE_USER')")
 	   	   .and()
 	   	   		.formLogin()

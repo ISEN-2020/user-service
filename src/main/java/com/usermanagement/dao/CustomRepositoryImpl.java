@@ -18,9 +18,8 @@ public class CustomRepositoryImpl implements CustomRepository {
 	private static final String QUERY_GET_USER_BY_ID = "SELECT u.* FROM user.user AS u WHERE u.id = ?1" ;
 	private static final String QUERY_GET_USERS = "SELECT u.* FROM user.user AS u";
 	private static final String QUERY_SAVE_USER = "INSERT INTO user.user (name, email, password) VALUES ('%s','%s','%s')";
-	//private static final String QUERY_DELETE_USER_BY_ID = "DELETE u.* FROM user.user AS u WHERE u.id = ?1";
-	private static final String QUERY_DELETE_USER_BY_ID = "DELETE FROM user WHERE user.id = ?1";
-	private static final String QUERY_LOGIN = "SELECT COUNT(*) FROM user WHERE name=?1 AND password = ?2";
+	private static final String QUERY_DELETE_USER_BY_EMAIL= "DELETE FROM user WHERE user.email = %s";
+	private static final String QUERY_LOGIN = "SELECT COUNT(*) FROM user WHERE email=?1 AND password = ?2";
 
 	@PersistenceContext
 	EntityManager entityManager;
@@ -37,8 +36,6 @@ public class CustomRepositoryImpl implements CustomRepository {
 	public User saveUser(User user) {
 		Query query = entityManager.createNativeQuery(String.format(QUERY_SAVE_USER, user.getName(), user.getEmailAddress(), user.getPassword()), User.class);
 		query.executeUpdate();
-		//System.out.println(user.getPassword());
-		//System.out.println(user.getEmailAddress());
 		return this.getUserById(user.getId());
 	}
 
@@ -53,16 +50,14 @@ public class CustomRepositoryImpl implements CustomRepository {
 			}
 		return null;
 	}
-
-	public void deleteUserById(int id) {
-		Query query = entityManager.createNativeQuery(QUERY_DELETE_USER_BY_ID, User.class);
-		query.setParameter(1, id);
-		return;
+	@Override
+	@Transactional
+	public User deleteUserByEmail(String email) {
+		System.out.println(email);
+		Query query = entityManager.createNativeQuery(String.format(QUERY_DELETE_USER_BY_EMAIL, email, User.class));
+		query.executeUpdate();
+		return null;
 	}
-
-	/*public boolean login(String username, String password) {
-		Query query = entityManager.createNativeQuery(QUERY_LOGIN, User.class);
-		query.setParameter(1, username, 2, password);
-		return;
-	}*/
+	
+	
 }
