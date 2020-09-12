@@ -54,8 +54,6 @@ Run .jar file
 java -jar ./target/user-management-1.0.0.jar
 ```
 
-
-
 ## Team
 Development platform - PORTEIL CALLONICO DOL - Sept 2020
 
