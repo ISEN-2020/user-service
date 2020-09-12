@@ -12,6 +12,7 @@ docker build -t <IMAGENAME> .
 Then run your docker image.
 
 ```bash
+
 docker run -e MYSQL_DB_HOST=jdbc:mysql://192.168.43.228:3306/user?serverTimezone=UTC -e MYSQL_DB_USERNAME=root -e MYSQL_DB_PASSWORD=root -p 8080:8080 <IMAGENAME>
 ```
 
@@ -28,7 +29,6 @@ In MySQL cmd, start scipt DataBase constructor
 ```bash
 source <SQL FILE>
 ```
-
 
 ## Usage
 
@@ -53,7 +53,6 @@ Run .jar file
 ```bash
 java -jar ./target/user-management-1.0.0.jar
 ```
-
 ## Team
 Development platform - PORTEIL CALLONICO DOL - Sept 2020
 
