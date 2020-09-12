@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.usermanagement.model.User;
-import com.usermanagement.model.Id;
+import com.usermanagement.model.Email;
 
 import com.usermanagement.dao.UserDao;
 
@@ -42,22 +42,10 @@ public class UserManagementController {
 		return userToDelete;
 	}
 
-	@RequestMapping(path = "/deleteUserById", method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody void deleteUserById(@RequestBody Id data) {
-		userDao.deleteUserById(data.getId());
-		return;
+	@RequestMapping(path = "/deleteUserByEmail", method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody User deleteUserByEmail(@RequestBody Email mail) {
+		System.out.println(mail.getEmail());
+		return userDao.deleteUserByEmail(mail.getEmail());
+		
 	}
-	/*
-	@RequestMapping(path = "/login1", method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity login(String username,String password) {
-		if(userDao.login(username, password)){
-			// Send http code 200
-			return new ResponseEntity<>(HttpStatus.200);
-		}
-		else {
-			//Send http code 403
-			return new ResponseEntity<>(HttpStatus.403);
-		}
-	}
-	*/
 }
