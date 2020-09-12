@@ -18,7 +18,9 @@ public class CustomRepositoryImpl implements CustomRepository {
 	private static final String QUERY_GET_USER_BY_ID = "SELECT u.* FROM user.user AS u WHERE u.id = ?1" ;
 	private static final String QUERY_GET_USERS = "SELECT u.* FROM user.user AS u";
 	private static final String QUERY_SAVE_USER = "INSERT INTO user.user (name, email, password) VALUES ('%s','%s','%s')";
-	
+	//private static final String QUERY_DELETE_USER_BY_ID = "DELETE u.* FROM user.user AS u WHERE u.id = ?1";
+	private static final String QUERY_DELETE_USER_BY_ID = "DELETE FROM user WHERE user.id = ?1";
+
 	@PersistenceContext
 	EntityManager entityManager;
 	
@@ -34,7 +36,8 @@ public class CustomRepositoryImpl implements CustomRepository {
 	public User saveUser(User user) {
 		Query query = entityManager.createNativeQuery(String.format(QUERY_SAVE_USER, user.getName(), user.getEmailAddress(), user.getPassword()), User.class);
 		query.executeUpdate();
-		System.out.println(user.getPassword());
+		//System.out.println(user.getPassword());
+		//System.out.println(user.getEmailAddress());
 		return this.getUserById(user.getId());
 	}
 
@@ -48,5 +51,11 @@ public class CustomRepositoryImpl implements CustomRepository {
 			//Ignore this because as per your logic this is ok!
 			}
 		return null;
+	}
+
+	public void deleteUserById(int id) {
+		Query query = entityManager.createNativeQuery(QUERY_DELETE_USER_BY_ID, User.class);
+		query.setParameter(1, id);
+		return;
 	}
 }

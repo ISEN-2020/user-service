@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.usermanagement.model.User;
+import com.usermanagement.model.Id;
+
 import com.usermanagement.dao.UserDao;
 
 @Controller
@@ -28,14 +30,20 @@ public class UserManagementController {
 	
 	@RequestMapping(path = "/saveUser", method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody User saveUser(@RequestBody User user) {
-		System.out.println("ON PASSE DANS CONTROLLER");
+		System.out.println(user.getEmailAddress());
 		return userDao.saveUser(user);
 	}
 	
 	@RequestMapping(path = "/deleteUser", method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody User deleteUser(int id) {
+	public @ResponseBody User deleteUser(@RequestBody int id) {
 		User userToDelete = userDao.getUserById(id);
 		userDao.deleteInBatch(Arrays.asList(userToDelete));
 		return userToDelete;
+	}
+
+	@RequestMapping(path = "/deleteUserById", method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody void deleteUserById(@RequestBody Id data) {
+		userDao.deleteUserById(data.getId());
+		return;
 	}
 }
