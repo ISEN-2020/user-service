@@ -1,0 +1,14 @@
+CREATE DATABASE library;
+\c library;
+
+CREATE TABLE user
+(
+    "ID" SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    "Name" VARCHAR(40) NOT NULL,
+    "email" VARCHAR(40) NOT NULL,
+    "password" VARCHAR(40) NOT NULL,
+    "enabled" TINYINT NOT NULL DEFAULT 1,
+    "role"  VARCHAR(40) NOT NULL DEFAULT "ROLE_USER",
+
+    PRIMARY KEY ("ID")
+)
