@@ -30,7 +30,6 @@ public class User {
 	private boolean enabled;
 	
 	public User() {
-		
 	}
 	
 	public User(String name, String emailAddress, String password) {
