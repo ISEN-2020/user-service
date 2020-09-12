@@ -28,6 +28,9 @@ public class User {
 	
 	@Column(name="enabled", columnDefinition = "TINYINT")
 	private boolean enabled;
+
+	@Column(name="role", columnDefinition="VARCHAR(40)")
+	private String role;
 	
 	public User() {
 	}
@@ -56,5 +59,9 @@ public class User {
 	
 	public boolean getEnabled() {
 		return this.enabled;
+	}
+
+	public String getRole(){
+		return this.role;
 	}
 }

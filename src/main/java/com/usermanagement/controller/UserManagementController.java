@@ -3,6 +3,7 @@ package com.usermanagement.controller;
 
 import java.util.Arrays;
 import java.util.List;
+//java.lang.Object;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -46,4 +47,17 @@ public class UserManagementController {
 		userDao.deleteUserById(data.getId());
 		return;
 	}
+	/*
+	@RequestMapping(path = "/login1", method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity login(String username,String password) {
+		if(userDao.login(username, password)){
+			// Send http code 200
+			return new ResponseEntity<>(HttpStatus.200);
+		}
+		else {
+			//Send http code 403
+			return new ResponseEntity<>(HttpStatus.403);
+		}
+	}
+	*/
 }
