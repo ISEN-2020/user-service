@@ -55,6 +55,11 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+            <groupId>org.jacoco</groupId>
+             <artifactId>jacoco-maven-plugin</artifactId>
+             <version>0.8.7</version>
+        </dependency>
 		<!--dependency>
 			<groupId>com.codebin</groupId>
 			<artifactId>maven-demo</artifactId>
