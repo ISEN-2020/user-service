@@ -25,7 +25,7 @@ jobs:
         tags: latest
         
     - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@code_analysis_dependency_check
+      uses: aquasecurity/trivy-action@master
       with:
         image-ref: 'docker.io/imlashsylmaryl/user-service:latest'
         format: 'table'
