@@ -85,6 +85,48 @@ POST http://localhost:8080/saveUser
 ```bash
 NO BODY
 ```
+
+### **List User :**
+
+#### **Request :**
+
+```bash
+GET http://localhost:8080/getUsers
+```
+
+```bash
+NO BODY
+```
+
+#### **Response :**
+
+```bash
+200 OK
+```
+
+```bash
+[
+    {
+        "id": 9,
+        "name": "john",
+        "emailAddress": "john@gmail.com",
+        "password": "johnpwd",
+        "enabled": true,
+        "role": "ROLE_USER"
+    },
+    {
+        "id": 10,
+        "name": "john2",
+        "emailAddress": "john2@gmail.com",
+        "password": "john2pwd",
+        "enabled": true,
+        "role": "ROLE_USER"
+    },
+
+    ...
+
+]
+```
 ## Manual Installation
 #### Prerequisite
 Java 14.0.2 / Meaven v3.6.3
