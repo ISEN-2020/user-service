@@ -18,7 +18,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 	private static final String QUERY_GET_USER_BY_ID = "SELECT u.* FROM user.user AS u WHERE u.id = ?1" ;
 	private static final String QUERY_GET_USERS = "SELECT u.* FROM user.user AS u";
 	private static final String QUERY_SAVE_USER = "INSERT INTO user.user (name, email, password) VALUES ('%s','%s','%s')";
-	private static final String QUERY_DELETE_USER_BY_EMAIL= "DELETE FROM user WHERE user.email = %s";
+	private static final String QUERY_DELETE_USER_BY_EMAIL= "DELETE FROM user WHERE user.email = '%s'";
 
 	@PersistenceContext
 	EntityManager entityManager;
