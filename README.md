@@ -60,6 +60,31 @@ Connect the microservice (docker:user-management) to the other.
 The User Management microservice API is used for management of the client's DataBase (register,delete).
 With a security level to check rights.
 
+### **Create User :**
+
+#### **Request :**
+
+```bash
+POST http://localhost:8080/saveUser
+```
+
+```bash
+{
+    "name": "john",
+    "emailAddress": "john@gmail.com",
+    "password": "johnpwd"
+}
+```
+
+#### **Response :**
+
+```bash
+200 OK
+```
+
+```bash
+NO BODY
+```
 ## Manual Installation
 #### Prerequisite
 Java 14.0.2 / Meaven v3.6.3
