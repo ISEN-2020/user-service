@@ -20,5 +20,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         registry: docker.io
-        repository: swannporteil/user-service
+        repository: imlashsylmaryl/user-service
         tag_with_sha: true
