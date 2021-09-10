@@ -4,7 +4,7 @@ COPY pom.xml /build/
 COPY src /build/src/
 WORKDIR /build/						
 
-RUN mvn package spring-boot:repackage
+RUN mvn package spring-boot:repackage 
 
 FROM gcr.io/distroless/java:11
 
