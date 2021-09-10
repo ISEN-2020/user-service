@@ -72,6 +72,12 @@ Create .jar file
 mvn spring-boot:repackage
 ```
 
+if the above command is not working, try the following one :
+
+```bash
+mvn clean install spring-boot:repackage
+```
+
 Run .jar file
 
 ```bash
