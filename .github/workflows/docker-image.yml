@@ -5,7 +5,7 @@ on:
   push:
     branches:
     - code_analysis_dependency_check
-    - master
+
 
 jobs:
 
@@ -63,3 +63,21 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ISEN-2020_user-service
+
+    analyzeDependencies:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Install NPM dependencies
+              run:  | 
+                    npm install --production --unsafe-perm
+                    
+            - uses: sburris/dependency-check-action@master
+              with:
+                Project-Name: user-service
+
+            - name: Archive dependency check reports
+              uses: actions/upload-artifact@v1
+              with:
+                name: reports
+                path: reports
