@@ -22,3 +22,14 @@ jobs:
         registry: docker.io
         repository: imlashsylmaryl/user-service
         tag_with_sha: true
+        tags: latest
+        
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'docker.io/imlashsylmaryl/user-service:latest'
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
