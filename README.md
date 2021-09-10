@@ -157,6 +157,30 @@ POST http://localhost:8080/deleteUser
 }
 ```
 
+### **Delete User By Email :**
+
+#### **Request :**
+
+```bash
+POST http://localhost:8080/deleteUserByEmail
+```
+
+```bash
+{
+    "email" : "john@gmail.com"
+}
+```
+
+#### **Response :**
+
+```bash
+200 OK
+```
+
+```bash
+NO BODY
+```
+
 
 ## Manual Installation
 #### Prerequisite
