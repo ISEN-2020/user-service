@@ -127,6 +127,37 @@ NO BODY
 
 ]
 ```
+
+### **Delete User :**
+
+#### **Request :**
+
+```bash
+POST http://localhost:8080/deleteUser
+```
+
+```bash
+9
+```
+
+#### **Response :**
+
+```bash
+200 OK
+```
+
+```bash
+{
+    "id": 9,
+    "name": "john",
+    "emailAddress": "john@gmail.com",
+    "password": "johnpwd",
+    "enabled": true,
+    "role": "ROLE_USER"
+}
+```
+
+
 ## Manual Installation
 #### Prerequisite
 Java 14.0.2 / Meaven v3.6.3
