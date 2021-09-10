@@ -74,7 +74,7 @@ jobs:
                   
           - uses: sburris/dependency-check-action@master
             with:
-              Project-Name: user-service
+              Project-Name: user-service  
 
           - name: Archive dependency check reports
             uses: actions/upload-artifact@v1
