@@ -5,6 +5,7 @@ on:
   push:
     branches:
     - code_analysis_dependency_check
+    - master
 
 jobs:
 
