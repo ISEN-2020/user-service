@@ -2,6 +2,15 @@
 
 Uer Management is a microservice in the next-generation cloud-native library system.
 
+## Prerequisites
+You need to have on your computer :
+MySQL click on the following link to download it
+https://dev.mysql.com/downloads/installer/
+
+Docker Desktop
+https://www.docker.com/products/docker-desktop
+
+
 ## Installation / Run
 
 Create Docker image whith source code.
@@ -11,9 +20,20 @@ docker build -t <IMAGENAME> .
 ```
 Then run your docker image.
 
+In order to run your docker image you need to have a running database on your computer (cf "Setup Database section below)
+
+You need to get your computer IP to do so, open a terminal and run the following command:
+
+```bash
+ipconfig
+```
+
+The info you're looking for is called IPv4 address, right down the corresponding numbers
+
+
 ```bash
 
-docker run -e MYSQL_DB_HOST=jdbc:mysql://192.168.43.228:3306/user?serverTimezone=UTC -e MYSQL_DB_USERNAME=root -e MYSQL_DB_PASSWORD=root -p 8080:8080 <IMAGENAME>
+docker run -e MYSQL_DB_HOST=jdbc:mysql://<YOUR_COMPUTER_IP>:3306/user?serverTimezone=UTC -e MYSQL_DB_USERNAME=root -e MYSQL_DB_PASSWORD=root -p 8080:8080 <IMAGENAME>
 ```
 
 ## Setup Database
@@ -29,6 +49,10 @@ In MySQL cmd, start scipt DataBase constructor
 ```bash
 source <SQL FILE>
 ```
+
+In MySQL Workbench you need to change the "User and Privileges" of your user "root".
+Under the section "User and Privileges"  clik on "root" on the right panel, change the parameter "Limit to Hosts Matching" to "%", click "Apply".
+
 
 ## Usage
 
@@ -54,5 +78,5 @@ Run .jar file
 java -jar ./target/user-management-1.0.0.jar
 ```
 ## Team
-Development platform - PORTEIL CALLONICO DOL - Sept 2020
+Development platform - LEFEVRE DESPRES GONIN - Sept 2021
 
