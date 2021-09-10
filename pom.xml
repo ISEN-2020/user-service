@@ -17,6 +17,8 @@
     
     
    	<properties>
+	     <sonar.organization>isen-2020</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
    	    <start-class>com.usermanagement.application.Application</start-class>
    		<maven.compiler.source>1.8</maven.compiler.source>
  		<maven.compiler.target>1.8</maven.compiler.target>
