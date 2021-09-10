@@ -128,7 +128,7 @@ NO BODY
 ]
 ```
 
-### **Delete User :**
+### **Delete User By ID :**
 
 #### **Request :**
 
