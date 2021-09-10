@@ -60,6 +60,128 @@ Connect the microservice (docker:user-management) to the other.
 The User Management microservice API is used for management of the client's DataBase (register,delete).
 With a security level to check rights.
 
+### **Create User :**
+
+#### **Request :**
+
+```bash
+POST http://localhost:8080/saveUser
+```
+
+```bash
+{
+    "name": "john",
+    "emailAddress": "john@gmail.com",
+    "password": "johnpwd"
+}
+```
+
+#### **Response :**
+
+```bash
+200 OK
+```
+
+```bash
+NO BODY
+```
+
+### **List User :**
+
+#### **Request :**
+
+```bash
+GET http://localhost:8080/getUsers
+```
+
+```bash
+NO BODY
+```
+
+#### **Response :**
+
+```bash
+200 OK
+```
+
+```bash
+[
+    {
+        "id": 9,
+        "name": "john",
+        "emailAddress": "john@gmail.com",
+        "password": "johnpwd",
+        "enabled": true,
+        "role": "ROLE_USER"
+    },
+    {
+        "id": 10,
+        "name": "john2",
+        "emailAddress": "john2@gmail.com",
+        "password": "john2pwd",
+        "enabled": true,
+        "role": "ROLE_USER"
+    },
+
+    ...
+
+]
+```
+
+### **Delete User By ID :**
+
+#### **Request :**
+
+```bash
+POST http://localhost:8080/deleteUser
+```
+
+```bash
+9
+```
+
+#### **Response :**
+
+```bash
+200 OK
+```
+
+```bash
+{
+    "id": 9,
+    "name": "john",
+    "emailAddress": "john@gmail.com",
+    "password": "johnpwd",
+    "enabled": true,
+    "role": "ROLE_USER"
+}
+```
+
+### **Delete User By Email :**
+
+#### **Request :**
+
+```bash
+POST http://localhost:8080/deleteUserByEmail
+```
+
+```bash
+{
+    "email" : "john@gmail.com"
+}
+```
+
+#### **Response :**
+
+```bash
+200 OK
+```
+
+```bash
+NO BODY
+```
+
+
 ## Manual Installation
 #### Prerequisite
 Java 14.0.2 / Meaven v3.6.3
