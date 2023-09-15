@@ -1,2 +1,6 @@
-fastapi==0.68.0  # Mettez la version que vous souhaitez utiliser
-uvicorn==0.15.0  # Mettez la version que vous souhaitez utiliser
+fastapi  # Mettez la version que vous souhaitez utiliser si vous voulez ex: fastapi==0.68.0
+uvicorn 
+SQLAlchemy
+psycopg2-binary
+pydantic
+asyncpg

@@ -1,54 +1,63 @@
 #!/bin/bash
 
-# Fonction pour vérifier si Python 3.x est installé
+# Function to check if Python 3.x is installed
 check_python() {
     if command -v python3 &> /dev/null; then
+        echo -e "\e[32mPython 3.x is installed:"
         python3 --version
+        echo -e "\e[0m"
     elif command -v python &> /dev/null && python --version 2>&1 | grep -q "Python 3"; then
+        echo -e "\e[32mPython 3.x is installed:"
         python --version
+        echo -e "\e[0m"
     else
-        echo "Python n'est pas installé. Téléchargement et installation de Python 3.11.5 en cours..."
+        echo -e "\e[31mPython is not installed. Downloading and installing Python 3.11.5...\e[0m"
         
-        # Télécharge Python 3.11.5
+        # Download Python 3.11.5
         wget https://www.python.org/ftp/python/3.11.5/Python-3.11.5.tar.xz
         
-        # Extrayez le fichier tar.xz
+        # Extract the tar.xz file
         tar -xf Python-3.11.5.tar.xz
         
-        # Accédez au répertoire Python-3.11.5
+        # Navigate to the Python-3.11.5 directory
         cd Python-3.11.5
         
-        # Configurez et installez Python
+        # Configure and install Python
         ./configure
         make
         sudo make install
         
-        # Revenez au répertoire initial
+        # Return to the initial directory
         cd ..
         
-        # Supprimez le fichier téléchargé
+        # Remove the downloaded file
         rm -rf Python-3.11.5 Python-3.11.5.tar.xz
         
-        # Définir un alias pour python3
+        # Set an alias for python3
+        echo -e "\e[32mPython 3.11.5 has been successfully installed."
+        echo -e "Creating the 'python' alias...\e[0m"
         echo 'alias python=python3' >> ~/.bashrc
-        
-        echo "Python 3.11.5 a été installé avec succès et l'alias 'python' a été créé."
     fi
 }
 
-# Appel de la fonction pour vérifier Python
+# Call the function to check Python
 check_python
 
-# Crée un environnement virtuel Python
+# Create a Python virtual environment
 python3 -m venv venv
 
-# Active l'environnement virtuel
+# Activate the virtual environment
+echo -e "\e[32mActivating the virtual environment...\e[0m"
 source venv/bin/activate
 
-# Installe les dépendances depuis requirements.txt
+# Install dependencies from requirements.txt
+echo -e "\e[32mInstalling dependencies from requirements.txt...\e[0m"
 pip install --no-cache-dir -r requirements.txt
 
-# Désactive l'environnement virtuel
+# Deactivate the virtual environment
+echo -e "\e[32mDeactivating the virtual environment...\e[0m"
 deactivate
 
-echo "L'environnement de développement a été configuré avec succès."
+echo -e "\e[32mThe development environment has been configured successfully."
+echo -e "To activate the virtual environment and start coding, run:\e[0m"
+echo -e "\e[36msource venv/bin/activate\e[0m"
