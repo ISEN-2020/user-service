@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Fonction pour vérifier si Python 3.x est installé
+check_python() {
+    if command -v python3 &> /dev/null; then
+        python3 --version
+    elif command -v python &> /dev/null && python --version 2>&1 | grep -q "Python 3"; then
+        python --version
+    else
+        echo "Python n'est pas installé. Téléchargement et installation de Python 3.11.5 en cours..."
+        
+        # Télécharge Python 3.11.5
+        wget https://www.python.org/ftp/python/3.11.5/Python-3.11.5.tar.xz
+        
+        # Extrayez le fichier tar.xz
+        tar -xf Python-3.11.5.tar.xz
+        
+        # Accédez au répertoire Python-3.11.5
+        cd Python-3.11.5
+        
+        # Configurez et installez Python
+        ./configure
+        make
+        sudo make install
+        
+        # Revenez au répertoire initial
+        cd ..
+        
+        # Supprimez le fichier téléchargé
+        rm -rf Python-3.11.5 Python-3.11.5.tar.xz
+        
+        # Définir un alias pour python3
+        echo 'alias python=python3' >> ~/.bashrc
+        
+        echo "Python 3.11.5 a été installé avec succès et l'alias 'python' a été créé."
+    fi
+}
+
+# Appel de la fonction pour vérifier Python
+check_python
+
+# Crée un environnement virtuel Python
+python3 -m venv venv
+
+# Active l'environnement virtuel
+source venv/bin/activate
+
+# Installe les dépendances depuis requirements.txt
+pip install --no-cache-dir -r requirements.txt
+
+# Désactive l'environnement virtuel
+deactivate
+
+echo "L'environnement de développement a été configuré avec succès."
