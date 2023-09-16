@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ./src_python
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - mon-reseau
+
+  db:
+    build:
+      context: ./userDb
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: user
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - mon-reseau
+
+networks:
+  mon-reseau:
+volumes:
+  postgres-data:
