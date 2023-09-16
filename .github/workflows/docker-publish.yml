@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - main  # Vous pouvez spécifier la branche de votre choix
+      - master  # Vous pouvez spécifier la branche de votre choix
 
 jobs:
   build:
@@ -21,7 +21,7 @@ jobs:
         echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         docker buildx create --use
         docker buildx build --platform linux/amd64,linux/arm64 -t $DOCKER_USERNAME/nom_image:tag -f Dockerfile .
-        docker push $DOCKER_USERNAME/nom_image:tag
+        docker push $DOCKER_USERNAME/pg-db-ms-user:tag
 
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}  # Créez un secret dans GitHub contenant votre nom d'utilisateur Docker Hub
