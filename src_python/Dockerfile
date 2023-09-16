@@ -1,5 +1,5 @@
 # Utiliser une image de base Python 3.8
-FROM python:3.8
+FROM python:latest
 
 # Définir une variable d'environnement pour garantir que la sortie Python est envoyée
 # sans tamponnement directement au terminal.
