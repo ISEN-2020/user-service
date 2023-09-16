@@ -1,0 +1,10 @@
+#!/bin/bash 
+
+# chmod +x init_dockerPy
+
+docker build -t userdb .
+
+docker run --name pg-db-ms-user \
+  -p 5432:5432 \
+  -v $(pwd)/userDb:/var/lib/postgresql/data \
+  -d userdb
