@@ -2,13 +2,14 @@ import crypt
 from hashlib import scrypt
 import bcrypt
 import asyncpg
+import os
 from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
 
 app = FastAPI()
 
 # Replace with your own database connection URL
-DATABASE_URL = "postgresql://admin:admin@localhost:5432/user"
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://admin:admin@localhost:5432/user")
 
 # Function to create a connection pool
 async def get_pool():
