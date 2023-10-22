@@ -1,11 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 
-class UserResponse(BaseModel):
-    id: int
+class User(BaseModel):
     name: str
     email: str
     password: str
-
-class UserListResponse(BaseModel):
-    users: List[UserResponse]
