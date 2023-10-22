@@ -8,6 +8,9 @@ ENV PYTHONUNBUFFERED=1
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
+# Upgrade pip
+RUN pip install --upgrade pip
+
 # Copier les fichiers de dépendance et installer les dépendances
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
@@ -17,3 +20,11 @@ COPY . .
 
 # Exécuter Uvicorn
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Use an official Python runtime as a parent image
+FROM python:latest
+
+
+
+
+
+
