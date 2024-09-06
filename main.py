@@ -77,4 +77,4 @@ def delete_user():
         return jsonify({"error": "Invalid email or password"}), 401
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
