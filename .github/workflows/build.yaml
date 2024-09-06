@@ -4,6 +4,8 @@ on:
     push:
         branches:
         - main
+        - pipeline
+        #
 
 jobs:
   sonarcloud:
@@ -49,4 +51,3 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
-          
