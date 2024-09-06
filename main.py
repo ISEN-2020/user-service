@@ -1,78 +1,76 @@
-from fastapi import FastAPI, HTTPException, Depends
-from pydantic import BaseModel
-from sqlalchemy import create_engine, Column, String, Boolean
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Session
+from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 
-app = FastAPI()
+app = Flask(__name__)
 
-# Configuration de la base de données SQLite
-SQLALCHEMY_DATABASE_URL = "sqlite:///./users.db"
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+# Configuring the SQLite database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-# Modèle utilisateur 
-class UserDB(Base):
-    __tablename__ = "users"
-    email = Column(String, primary_key=True, index=True)  # Utilisation de l'email comme clé primaire
-    password = Column(String)
-    is_admin = Column(Boolean, default=False)  # Booléen pour déterminer si l'utilisateur est admin ou non
+# User model
+class UserDB(db.Model):
+    email = db.Column(db.String, primary_key=True, index=True)
+    password_hash = db.Column(db.String)
+    is_admin = db.Column(db.Boolean, default=False)
 
-Base.metadata.create_all(bind=engine)
+# Initialize the database
+with app.app_context():
+    db.create_all()
 
-# Modèle de données pour l'utilisateur
-class User(BaseModel):
-    email: str
-    password: str
-    is_admin: bool = False
+# Register endpoint
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
 
-# Dépendance pour obtenir la session de la base de données
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+    # Check if the user already exists
+    if UserDB.query.filter_by(email=email).first():
+        return jsonify({"error": "User already exists"}), 400
 
-# Endpoint pour l'enregistrement des utilisateurs
-@app.post("/register")
-def register(user: User, db: Session = Depends(get_db)):
-    user = db.query(UserDB).filter(UserDB.email == user.email).first()
-    
-    if user is not None:  
-        db_user = UserDB(email=user.email, password=user.password, is_admin=user.is_admin)
-        db.add(db_user)
-        db.commit()
-        db.refresh(db_user)
-        return {"message": "User registered successfully", "user_email": db_user.email}
-    
-    else :
-        return False
+    # Hash the password with a salt
+    password_hash = generate_password_hash(password)
 
-# Endpoint pour la connexion des utilisateurs
-@app.post("/login")
-def login(email: str, password: str,admin_page: str , db: Session = Depends(get_db)):
-    if admin_page == True:
-        user = db.query(UserDB).filter(UserDB.email == email, UserDB.password == password, UserDB == admin_page ).first()
-        if user == None:
-            return False
-        else:
-            return True    
+    # Create a new user
+    new_user = UserDB(email=email, password_hash=password_hash)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"message": "User registered successfully"}), 201
+
+# Login endpoint
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+
+    # Find the user by email
+    user = UserDB.query.filter_by(email=email).first()
+
+    if user and check_password_hash(user.password_hash, password):
+        return jsonify({"success": True, "message": "Login successful"})
     else:
-        user = db.query(UserDB).filter(UserDB.email == email, UserDB.password == password).first()
-        if user == None:
-            return False
-        else:
-            return True 
-    
+        return jsonify({"success": False, "message": "Invalid email or password"}), 401
 
-# Endpoint pour supprimer un utilisateur
-@app.delete("/delete")
-def delete_user(email: str, db: Session = Depends(get_db)):
-    user = db.query(UserDB).filter(UserDB.email == email).first()
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    db.delete(user)
-    db.commit()
-    return {"message": "User deleted successfully"}
+# Delete user endpoint
+@app.route('/delete', methods=['DELETE'])
+def delete_user():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+
+    # Find the user by email
+    user = UserDB.query.filter_by(email=email).first()
+
+    if user and check_password_hash(user.password_hash, password):
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({"message": "User deleted successfully"}), 200
+    else:
+        return jsonify({"error": "Invalid email or password"}), 401
+
+if __name__ == '__main__':
+    app.run(debug=True)
