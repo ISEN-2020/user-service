@@ -1,8 +1,0 @@
-fastapi  # Mettez la version que vous souhaitez utiliser si vous voulez ex: fastapi==0.68.0
-uvicorn 
-SQLAlchemy
-psycopg2-binary
-pydantic
-asyncpg
-bcrypt
-python3.10-venv
