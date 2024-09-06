@@ -25,6 +25,7 @@ def register():
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
+    is_admin = data.get('is_admin', False)  # Default to False if not provided
 
     # Check if the user already exists
     if UserDB.query.filter_by(email=email).first():
@@ -34,13 +35,13 @@ def register():
     password_hash = generate_password_hash(password)
 
     # Create a new user
-    new_user = UserDB(email=email, password_hash=password_hash)
+    new_user = UserDB(email=email, password_hash=password_hash, is_admin=is_admin)
     db.session.add(new_user)
     db.session.commit()
 
     return jsonify({"message": "User registered successfully"}), 201
 
-# Login endpoint
+# Login endpoint with admin/customer check
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -51,9 +52,12 @@ def login():
     user = UserDB.query.filter_by(email=email).first()
 
     if user and check_password_hash(user.password_hash, password):
-        return jsonify({"success": True, "message": "Login successful"})
+        if user.is_admin:
+            return True
+        else:
+            return True
     else:
-        return jsonify({"success": False, "message": "Invalid email or password"}), 401
+        return False
 
 # Delete user endpoint
 @app.route('/delete', methods=['DELETE'])
