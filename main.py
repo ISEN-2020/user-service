@@ -20,7 +20,7 @@ with app.app_context():
     db.create_all()
 
 # Register endpoint
-@app.route('/register', methods=['POST'])
+@app.route('/api/register', methods=['POST'])
 def register():
     data = request.get_json()
     email = data.get('email')
@@ -42,7 +42,7 @@ def register():
     return jsonify({"message": "User registered successfully"}), 201
 
 # Login endpoint with admin/customer check
-@app.route('/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
     email = data.get('email')
@@ -53,11 +53,11 @@ def login():
 
     if user and check_password_hash(user.password_hash, password):
         if user.is_admin:
-            return True
+            return jsonify({"success": True, "message": "Admin login successful", "role": "admin"})
         else:
-            return True
+            return jsonify({"success": True, "message": "Customer login successful", "role": "customer"})
     else:
-        return False
+        return jsonify({"success": False, "message": "Invalid email or password"}), 401
 
 # Delete user endpoint
 @app.route('/delete', methods=['DELETE'])
