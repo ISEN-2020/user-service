@@ -60,7 +60,7 @@ def login():
         return jsonify({"success": False, "message": "Invalid email or password"}), 401
 
 # Delete user endpoint
-@app.route('/delete', methods=['DELETE'])
+@app.route('/api/delete', methods=['DELETE'])
 def delete_user():
     data = request.get_json()
     email = data.get('email')
