@@ -32,7 +32,7 @@ jobs:
             username: ${{ secrets.DOCKER_USERNAME }}
             password: ${{ secrets.DOCKER_PASSWORD }}
             registry: docker.io
-            repository: matheo83/user-service
+            repository: ${{ secrets.DOCKER_USERNAME }}/user-service
             tag_with_sha: true 
             tags: latest
 
@@ -44,7 +44,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:          
-          image-ref: 'docker.io/matheo83/user-service'
+          image-ref: 'docker.io/${{ secrets.DOCKER_USERNAME }}/user-service'
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
