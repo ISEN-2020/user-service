@@ -1,20 +1,28 @@
 FROM python:3.9-slim
 
-# Définir le répertoire de travail dans le conteneur
+# Bonnes pratiques Python
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+# Créer un utilisateur non-root pour l'exécution
+RUN addgroup --system app && adduser --system --ingroup app app
+
+# Répertoire de travail
 WORKDIR /app
 
-# Copier le fichier requirements.txt dans le conteneur
-COPY requirements.txt ./
+# Installer les dépendances (en root), puis on droppera les privilèges
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip \
+ && pip install --no-cache-dir -r requirements.txt
 
-# Installer les dépendances
-RUN pip install --no-cache-dir -r requirements.txt
+# Copier uniquement les fichiers nécessaires, en les possédant par l'utilisateur non-root
+COPY --chown=app:app main.py .
 
-# Copier le reste de l'application dans le conteneur
-COPY . .
-
-# Exposer le port que l'application va utiliser (par exemple, 5000 pour Flask)
+# Port de l'app (ex: Flask)
 EXPOSE 5000
 
-# Commande pour démarrer l'application
-# Adapter cette commande selon la façon dont votre application démarre
+# Exécuter en non-root (conforme Sonar)
+USER app
+
+# Commande de démarrage
 CMD ["python", "main.py"]
