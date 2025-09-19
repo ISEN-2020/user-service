@@ -1,9 +1,11 @@
+from flask_wtf import CSRFProtect
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-
+csrf = CSRFProtect()
+csrf.init_app(app)
 # Configuring the SQLite database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -23,11 +25,15 @@ with app.app_context():
 @app.route('/api/register', methods=['POST'])
 def register():
     data = request.get_json()
-    email = data.get('email')
+    email = data.get('email').strip().lower() #change : lowercase et strip pour les espaces
     password = data.get('password')
-    is_admin = data.get('is_admin', False)  # Default to False if not provided
 
-    # Check if the user already exists
+    # Checks
+    ## check email & mdp presents
+    if not email or not password:
+        return jsonify({"error": "email and password are required"}), 400
+
+    ## user existant
     if UserDB.query.filter_by(email=email).first():
         return jsonify({"error": "User already exists"}), 400
 
@@ -35,7 +41,7 @@ def register():
     password_hash = generate_password_hash(password)
 
     # Create a new user
-    new_user = UserDB(email=email, password_hash=password_hash, is_admin=is_admin)
+    new_user = UserDB(email=email, password_hash=password_hash, is_admin=False) # change : force non admin a la creation du compte
     db.session.add(new_user)
     db.session.commit()
 
@@ -77,4 +83,5 @@ def delete_user():
         return jsonify({"error": "Invalid email or password"}), 401
 
 if __name__ == '__main__':
+
     app.run(debug=True, host="0.0.0.0")
