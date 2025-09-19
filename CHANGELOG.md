@@ -1,14 +1,18 @@
 Note technique des changements effectués
 
-
 ######### BUILD.YML ##########
 
 Variabilisation des noms
+
+
 
 ######### DOCKERFILE #########
 
 Correction d'une faille de sécurité au niveau d'un COPY
 Correction d'une faille de sécurtié parce que l'image python est en root
+Changement de la version de python
+
+
 
 ######### MAIN.PY ############
 
