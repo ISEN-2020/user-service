@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.13
 
 # Bonnes pratiques Python
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -15,10 +15,9 @@ RUN pip install --no-cache-dir --upgrade pip \
  && pip install --no-cache-dir -r /app/requirements.txt
 
 # Code applicatif : possédé par root et non inscriptible par l'utilisateur
-# 755 = root: rwx ; groupe/autres: r-x (pas d'écriture)
 COPY --chown=root:root --chmod=755 main.py /app/main.py
 
-# (Optionnel) Répertoire **écrivable** par l'utilisateur pour logs/tmp
+# Répertoire **écrivable** par l'utilisateur pour logs/tmp
 RUN mkdir -p /app/var && chown app:app /app/var
 ENV APP_DATA_DIR=/app/var
 
