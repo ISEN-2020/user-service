@@ -4,25 +4,27 @@ FROM python:3.9-slim
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-# Créer un utilisateur non-root pour l'exécution
+# Créer l'utilisateur non-root
 RUN addgroup --system app && adduser --system --ingroup app app
 
-# Répertoire de travail
 WORKDIR /app
 
-# Installer les dépendances (en root), puis on droppera les privilèges
-COPY requirements.txt .
+# Dépendances (en root)
+COPY --chown=root:root --chmod=644 requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir --upgrade pip \
- && pip install --no-cache-dir -r requirements.txt
+ && pip install --no-cache-dir -r /app/requirements.txt
 
-# Copier uniquement les fichiers nécessaires, en les possédant par l'utilisateur non-root
-COPY --chown=app:app main.py .
+# Code applicatif : possédé par root et non inscriptible par l'utilisateur
+# 755 = root: rwx ; groupe/autres: r-x (pas d'écriture)
+COPY --chown=root:root --chmod=755 main.py /app/main.py
 
-# Port de l'app (ex: Flask)
+# (Optionnel) Répertoire **écrivable** par l'utilisateur pour logs/tmp
+RUN mkdir -p /app/var && chown app:app /app/var
+ENV APP_DATA_DIR=/app/var
+
 EXPOSE 5000
 
-# Exécuter en non-root (conforme Sonar)
+# Exécuter en non-root
 USER app
 
-# Commande de démarrage
-CMD ["python", "main.py"]
+CMD ["python", "/app/main.py"]
